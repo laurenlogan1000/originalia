@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Originalia — License Your Characters. Earn Every Time.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #F0EDE8;
+      --ink-soft: #8A8680;
+      --cream: #0D0F0E;
+      --warm-white: #1E2420;
+      --accent: #6BADD4;
+      --accent-light: #172028;
+      --accent-dark: #9CCCE8;
+      --rule: #2E3430;
+      --warm: #D4894A;
+      --warm-light: #3A2410;
+      --navy-dark: #141C18;
+      --serif: 'Space Grotesk', sans-serif;
+      --sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 300px 300px;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: var(--cream);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-style: italic;
+      color: var(--ink);
+      letter-spacing: -0.3px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav a {
+      font-size: 14px;
+      text-decoration: none;
+      background: var(--accent);
+      color: white;
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+
+    nav a:hover { background: var(--accent-dark); }
+
+    /* HERO */
+    .hero {
+      padding: 72px 72px 80px;
+      text-align: left;
+    }
+
+    .eyebrow { display: none; }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(64px, 10.5vw, 136px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -4px;
+      color: var(--ink);
+      margin-bottom: 52px;
+      max-width: 1100px;
+    }
+
+    h1 em {
+      font-style: normal;
+      font-weight: 500;
+      color: var(--ink-soft);
+      white-space: nowrap;
+    }
+
+    .hero-sub {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: end;
+      max-width: 960px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .hero-cta:hover { background: var(--accent-dark); }
+
+    .hero-note {
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    /* DIVIDER */
+    .divider { display: none; }
+
+    /* HOW IT WORKS */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 32px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 4.5vw, 46px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      margin-bottom: 48px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .step {
+      background: var(--warm-white);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
+      border-radius: 4px;
+      padding: 32px;
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      background: var(--warm-light);
+      color: var(--warm);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .step h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .step p {
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+
+    /* EARNINGS */
+    .section-intro {
+      font-size: 17px;
+      color: var(--ink-soft);
+      max-width: 580px;
+      margin-bottom: 40px;
+      line-height: 1.65;
+    }
+
+
+    .use-row--ai {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .use-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .use-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .use-label h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .use-label p {
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    .opt-in-badge {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: rgba(255,255,255,0.12);
+      color: var(--ink);
+      padding: 3px 8px;
+      border-radius: 4px;
+      vertical-align: middle;
+    }
+
+    .use-rate {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      white-space: nowrap;
+      opacity: 0.5;
+      font-style: italic;
+    }
+
+    .earnings-note {
+      font-size: 14px;
+      color: var(--ink-soft);
+      opacity: 0.7;
+    }
+
+    /* PROTECTION */
+    .protection-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .protection-item {
+      padding: 28px;
+      background: var(--warm-white);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
+      border-radius: 4px;
+    }
+
+    .prot-icon {
+      font-size: 10px;
+      color: var(--ink);
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    .protection-item h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .protection-item p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+
+    /* AI CALLOUT */
+    .ai-callout {
+      margin-top: 40px;
+    }
+
+    .ai-callout-card {
+      background: var(--cream);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
+      border-radius: 4px;
+      padding: 32px;
+    }
+
+    .ai-callout h3 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.4;
+      margin-bottom: 12px;
+    }
+
+    .ai-callout p {
+      font-size: 16px;
+      color: var(--ink-soft);
+      line-height: 1.75;
+      max-width: 680px;
+    }
+
+    /* LOOKING FOR */
+    .looking {
+      background: var(--navy-dark);
+      color: var(--cream);
+    }
+
+    .looking .section {
+      max-width: 900px;
+    }
+
+    .looking .section-label {
+      color: rgba(200,220,240,0.6);
+    }
+
+    .looking h2 {
+      color: #F0EDE8;
+    }
+
+    .art-types {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .art-type {
+      border-radius: 4px;
+      padding: 28px 32px;
+      background: rgba(255,255,255,0.09);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+    }
+
+    .art-type h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #F0EDE8;
+    }
+
+    .art-type p {
+      font-size: 14px;
+      color: rgba(240,237,232,0.82);
+      line-height: 1.6;
+    }
+
+    .art-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #EDE8FB;
+      background: rgba(255,255,255,0.15);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    /* WHO BUYS */
+    .buyers {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 32px;
+    }
+
+    .buyer-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .buyer-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 24px;
+      background: var(--warm-white);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
+      border-radius: 4px;
+    }
+
+    .buyer-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .buyer-item h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .buyer-item p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    /* FORM */
+    .form-section {
+      background: var(--cream);
+    }
+
+    .form-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 32px;
+      text-align: center;
+    }
+
+    .form-inner .section-label {
+      color: var(--accent-dark);
+    }
+
+    .form-inner h2 {
+      margin-bottom: 12px;
+    }
+
+    .form-inner > p {
+      font-size: 16px;
+      color: var(--ink-soft);
+      margin-bottom: 40px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: left;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      font-family: var(--sans);
+      background: var(--warm-white);
+      color: var(--ink);
+      outline: none;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+      transition: box-shadow 0.15s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .submit-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 6px;
+    }
+
+    .submit-btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .form-fine {
+      font-size: 12px;
+      color: var(--ink-soft);
+      opacity: 0.7;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* SUCCESS STATE */
+    .success-msg {
+      display: none;
+      background: white;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
+      border-radius: 4px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .success-msg h3 {
+      font-family: var(--serif);
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    .success-msg p {
+      color: var(--ink-soft);
+      font-size: 15px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-size: 13px;
+      color: var(--ink-soft);
+      opacity: 0.6;
+    }
+
+    /* USE TICKER */
+    .use-types {
+      position: relative;
+      height: 88px;
+      overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
+
+    .use-row {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 28px;
+      gap: 16px;
+      background: var(--warm-white);
+      opacity: 0;
+      transform: translateY(60px);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease;
+      border-bottom: none;
+    }
+
+    .use-row.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .use-row.exit {
+      opacity: 0;
+      transform: translateY(-60px);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .hero { padding: 48px 24px 56px; }
+      h1 { letter-spacing: -2px; margin-bottom: 36px; }
+      .hero-sub { grid-template-columns: 1fr; gap: 32px; }
+      .steps { grid-template-columns: 1fr; }
+      .art-types { grid-template-columns: 1fr; }
+      .buyer-list { grid-template-columns: 1fr; }
+      .protection-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .section { padding: 60px 24px; }
+      .use-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="logo"><em>Originalia</em></span>
+    <a href="#apply">Apply for early access</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Your characters.<br /><em>Royalties every time.</em></h1>
+    <div class="hero-sub">
+      <p>A curated marketplace where character artists license their original IP to studios, filmmakers, publishers, and storytellers — and get paid every time it's used.</p>
+      <div class="hero-actions">
+        <a href="#apply" class="hero-cta">Apply for early access →</a>
+        <p class="hero-note">Free to join. You set licensing terms. We handle the rest.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <p class="section-label">How it works</p>
+    <h2>Upload once.<br />Earn on every use.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Upload your characters</h3>
+        <p>Submit your original character art — digital, hand-drawn, or mixed media. You retain full ownership of your IP.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>We handle licensing</h3>
+        <p>Originalia manages licensing agreements with every buyer. You approve terms once. We enforce them on every transaction.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Earn royalties</h3>
+        <p>Get paid every time your character appears in commercial content — a short film, a brand campaign, a storybook, a game, or a streaming series.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EARNINGS -->
+  <section class="section">
+    <p class="section-label">What you earn</p>
+    <h2>You set the floor.<br />We negotiate up.</h2>
+    <p class="section-intro">Every character you list comes with pricing you control. You define a minimum rate for each type of use — we negotiate with buyers and never license below it. You approve every deal before it's issued.</p>
+    <div class="use-types">
+      <div class="use-row">
+        <div class="use-label">
+          <div>
+            <h3>Film & streaming</h3>
+            <p>Series, short films, streaming originals</p>
+          </div>
+        </div>
+        <div class="use-rate">You set the rate</div>
+      </div>
+      <div class="use-row">
+        <div class="use-label">
+          <div>
+            <h3>Publishing & editorial</h3>
+            <p>Books, storybooks, graphic novels, digital readers</p>
+          </div>
+        </div>
+        <div class="use-rate">You set the rate</div>
+      </div>
+      <div class="use-row">
+        <div class="use-label">
+          <div>
+            <h3>Brand & commercial</h3>
+            <p>Campaigns, mascots, branded content</p>
+          </div>
+        </div>
+        <div class="use-rate">You set the rate</div>
+      </div>
+      <div class="use-row use-row--ai">
+        <div class="use-label">
+          <div>
+            <h3>AI training data</h3>
+            <p>Your choice, per character.</p>
+          </div>
+        </div>
+        <div class="use-rate">Optional</div>
+      </div>
+    </div>
+    <p class="earnings-note">Every use is reported to you — where your characters go, who licensed them, and what they paid.</p>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PROTECTION -->
+  <section class="section">
+    <p class="section-label">How your art is protected</p>
+    <h2>Licensing your work<br />isn't the same as losing it.</h2>
+    <div class="protection-grid">
+      <div class="protection-item">
+        <div class="prot-icon">◆</div>
+        <h3>You own it. Always.</h3>
+        <p>Licensing is not selling. Your IP never transfers to a buyer. Every agreement grants use rights only — your characters remain yours.</p>
+      </div>
+      <div class="protection-item">
+        <div class="prot-icon">◆</div>
+        <h3>Exclusivity is enforced.</h3>
+        <p>If you list a character as exclusive, that means exclusive. We manage the agreements and pursue violations on your behalf — you don't have to chase anyone.</p>
+      </div>
+      <div class="protection-item">
+        <div class="prot-icon">◆</div>
+        <h3>Full transaction visibility.</h3>
+        <p>You see every license issued — who bought it, what use type, what they paid, and when. No black box.</p>
+      </div>
+      <div class="protection-item">
+        <div class="prot-icon">◆</div>
+        <h3>You approve every deal.</h3>
+        <p>Nothing goes out without your sign-off. You review the buyer and terms before any license is issued.</p>
+      </div>
+    </div>
+    <div class="ai-callout">
+      <div class="ai-callout-card">
+        <h3>On AI training use</h3>
+        <p>AI companies need original characters. Right now, most artists never see a dollar from it — the work gets taken, not licensed. We're building AI training as an opt-in licensing category so that if you want to participate, you get paid for it. And if you don't, you have real backing behind that choice. We're working with legal and nonprofit partners already fighting for artists in this space. Our goal isn't a defensive crouch — it's a world where original art has more value, not less.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOOKING FOR -->
+  <div class="looking">
+    <section class="section">
+      <p class="section-label">What we're looking for</p>
+      <h2>Original characters<br />with a life of their own.</h2>
+      <div class="art-types">
+        <div class="art-type">
+          <span class="art-tag">Digital</span>
+          <h3>Digital illustration</h3>
+          <p>Character sheets, expression sets, turnarounds. Clean linework or painterly styles. Ready for animation reference or direct use.</p>
+        </div>
+        <div class="art-type">
+          <span class="art-tag">Traditional</span>
+          <h3>Hand-drawn & mixed media</h3>
+          <p>Ink, watercolor, pencil — scanned and cleaned up. Hand-drawn characters carry a warmth and texture that digital tools still can't replicate.</p>
+        </div>
+        <div class="art-type">
+          <span class="art-tag">Concept art</span>
+          <h3>Character concept & design</h3>
+          <p>Full character bibles welcome. The more developed the character's world, the more licensing potential it carries.</p>
+        </div>
+        <div class="art-type">
+          <span class="art-tag">Exclusive IP</span>
+          <h3>Original, unpublished work</h3>
+          <p>We prioritize exclusive characters — IP that isn't already listed elsewhere. Exclusivity commands higher royalty rates.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- WHO BUYS -->
+  <section class="buyers">
+    <p class="section-label">Who licenses your work</p>
+    <h2>A market that's growing<br />faster than supply.</h2>
+    <div class="buyer-list">
+      <div class="buyer-item">
+        <div>
+          <h3>Animation & streaming studios</h3>
+          <p>Independent and mid-size studios producing short-form series, YouTube originals, and streaming content who need original character IP without building it from scratch.</p>
+        </div>
+      </div>
+      <div class="buyer-item">
+        <div>
+          <h3>Publishers & storytellers</h3>
+          <p>Publishers, self-publishers, and independent creators building illustrated books, graphic novels, and narrative content around distinctive characters.</p>
+        </div>
+      </div>
+      <div class="buyer-item">
+        <div>
+          <h3>Brands & creative agencies</h3>
+          <p>Commercial teams building character-driven campaigns and brand mascots — work that demands expressive, distinctive visuals with clear licensing provenance.</p>
+        </div>
+      </div>
+      <div class="buyer-item">
+        <div>
+          <h3>AI content creators</h3>
+          <p>Studios and developers building AI-powered storytelling tools who need licensed, original character art — not generated imagery with unclear IP status.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLY FORM -->
+  <div class="form-section" id="apply">
+    <div class="form-inner">
+      <p class="section-label">Apply for early access</p>
+      <h2>Join the founding artist cohort.</h2>
+      <p>We're handpicking the first group of artists. Early members set the tone for what Originalia becomes — and earn the best royalty terms.</p>
+
+      <form id="applyForm">
+        <div class="form-row">
+          <div>
+            <label for="fname">First name</label>
+            <input type="text" id="fname" name="fname" placeholder="Ada" required />
+          </div>
+          <div>
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" name="lname" placeholder="Lovelace" required />
+          </div>
+        </div>
+
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="ada@yoursite.com" required />
+        </div>
+
+        <div>
+          <label for="portfolio">Portfolio or social link</label>
+          <input type="url" id="portfolio" name="portfolio" placeholder="https://yourportfolio.com" required />
+        </div>
+
+        <div>
+          <label for="style">Primary art style</label>
+          <select id="style" name="style" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="digital-illustration">Digital illustration</option>
+            <option value="hand-drawn">Hand-drawn / traditional</option>
+            <option value="concept-art">Concept art</option>
+            <option value="mixed-media">Mixed media</option>
+            <option value="3d">3D / CGI characters</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="note">Tell us about your characters <span style="font-weight:400;opacity:0.6">(optional)</span></label>
+          <textarea id="note" name="note" placeholder="What kind of characters do you make? Any existing series or worlds?"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Apply for early access →</button>
+        <p class="form-fine">No commitment required. We'll follow up within a week.</p>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        <h3>You're on the list.</h3>
+        <p>Thanks for applying. We're reviewing every submission personally and will be in touch within a week.<br /><br />In the meantime — keep making things.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 Originalia. All rights reserved.
+  </footer>
+
+  <script>
+    // Form submit
+    document.getElementById('applyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    });
+
+    // Use-type vertical ticker
+    const rows = Array.from(document.querySelectorAll('.use-row'));
+    let current = 0;
+    rows[current].classList.add('active');
+
+    setInterval(() => {
+      const prev = current;
+      current = (current + 1) % rows.length;
+      rows[prev].classList.remove('active');
+      rows[prev].classList.add('exit');
+      rows[current].classList.add('active');
+      setTimeout(() => rows[prev].classList.remove('exit'), 500);
+    }, 2500);
+  </script>
+
+</body>
+</html>
