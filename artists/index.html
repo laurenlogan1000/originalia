@@ -826,54 +826,7 @@
       <h2>Join the founding artist cohort.</h2>
       <p>We're handpicking the first group of artists. Early members set the tone for what Originalia becomes — and earn the best royalty terms.</p>
 
-      <form id="applyForm">
-        <div class="form-row">
-          <div>
-            <label for="fname">First name</label>
-            <input type="text" id="fname" name="fname" placeholder="Ada" required />
-          </div>
-          <div>
-            <label for="lname">Last name</label>
-            <input type="text" id="lname" name="lname" placeholder="Lovelace" required />
-          </div>
-        </div>
-
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="ada@yoursite.com" required />
-        </div>
-
-        <div>
-          <label for="portfolio">Portfolio or social link</label>
-          <input type="url" id="portfolio" name="portfolio" placeholder="https://yourportfolio.com" required />
-        </div>
-
-        <div>
-          <label for="style">Primary art style</label>
-          <select id="style" name="style" required>
-            <option value="" disabled selected>Select one</option>
-            <option value="digital-illustration">Digital illustration</option>
-            <option value="hand-drawn">Hand-drawn / traditional</option>
-            <option value="concept-art">Concept art</option>
-            <option value="mixed-media">Mixed media</option>
-            <option value="3d">3D / CGI characters</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="note">Tell us about your characters <span style="font-weight:400;opacity:0.6">(optional)</span></label>
-          <textarea id="note" name="note" placeholder="What kind of characters do you make? Any existing series or worlds?"></textarea>
-        </div>
-
-        <button type="submit" class="submit-btn">Apply for early access →</button>
-        <p class="form-fine">No commitment required. We'll follow up within a week.</p>
-      </form>
-
-      <div class="success-msg" id="successMsg">
-        <h3>You're on the list.</h3>
-        <p>Thanks for applying. We're reviewing every submission personally and will be in touch within a week.<br /><br />In the meantime — keep making things.</p>
-      </div>
+      <iframe data-tally-src="https://tally.so/embed/eqL41E?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="644" frameborder="0" marginheight="0" marginwidth="0" title="Artist interest"></iframe>
     </div>
   </div>
 
@@ -881,14 +834,9 @@
     © 2026 Originalia. All rights reserved.
   </footer>
 
-  <script>
-    // Form submit
-    document.getElementById('applyForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      this.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-    });
+  <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
 
+  <script>
     // Use-type vertical ticker
     const rows = Array.from(document.querySelectorAll('.use-row'));
     let current = 0;
