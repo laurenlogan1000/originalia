@@ -12,6 +12,29 @@
 
     gtag('config', 'G-TMRE4HCQSG');
   </script>
+  <!-- Mixpanel -->
+  <script src="https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"></script>
+  <script>
+    mixpanel.init('742992ac6269996f0be103675c8387c9');
+
+    function originaliaLandingSource() {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('utm_source')) return params.get('utm_source');
+      if (params.get('gclid')) return 'paid_search';
+      var ref = document.referrer;
+      if (!ref) return 'direct';
+      var host = '';
+      try { host = new URL(ref).hostname.replace('www.', ''); } catch (e) { return 'referral'; }
+      var searchEngines = ['google.', 'bing.', 'duckduckgo.', 'yahoo.', 'baidu.'];
+      for (var i = 0; i < searchEngines.length; i++) {
+        if (host.indexOf(searchEngines[i]) !== -1) return 'organic';
+      }
+      return 'referral';
+    }
+
+    window.originaliaLandingSource = originaliaLandingSource();
+    mixpanel.track('site_landing', { landing_source: window.originaliaLandingSource });
+  </script>
   <title>Originalia — Exclusive Character Art, Cleared for Commercial Use</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -591,8 +614,23 @@
   </footer>
 
   <script>
-    document.getElementById('requestForm').addEventListener('submit', function(e) {
+    var requestForm = document.getElementById('requestForm');
+    var requestFormStarted = false;
+    requestForm.addEventListener('focusin', function() {
+      if (requestFormStarted) return;
+      requestFormStarted = true;
+      mixpanel.track('email_interest_form_started', {
+        form_variant: 'buyer_request_v1',
+        landing_source: window.originaliaLandingSource
+      });
+    });
+
+    requestForm.addEventListener('submit', function(e) {
       e.preventDefault();
+      mixpanel.track('email_interest_form_submitted', {
+        form_variant: 'buyer_request_v1',
+        submission_type: 'email_request'
+      });
       this.style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
       // TODO: wire to Airtable, Notion, or backend

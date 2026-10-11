@@ -12,6 +12,29 @@
 
     gtag('config', 'G-TMRE4HCQSG');
   </script>
+  <!-- Mixpanel -->
+  <script src="https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"></script>
+  <script>
+    mixpanel.init('742992ac6269996f0be103675c8387c9');
+
+    function originaliaLandingSource() {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('utm_source')) return params.get('utm_source');
+      if (params.get('gclid')) return 'paid_search';
+      var ref = document.referrer;
+      if (!ref) return 'direct';
+      var host = '';
+      try { host = new URL(ref).hostname.replace('www.', ''); } catch (e) { return 'referral'; }
+      var searchEngines = ['google.', 'bing.', 'duckduckgo.', 'yahoo.', 'baidu.'];
+      for (var i = 0; i < searchEngines.length; i++) {
+        if (host.indexOf(searchEngines[i]) !== -1) return 'organic';
+      }
+      return 'referral';
+    }
+
+    window.originaliaLandingSource = originaliaLandingSource();
+    mixpanel.track('site_landing', { landing_source: window.originaliaLandingSource });
+  </script>
   <title>Originalia — License Your Characters. Earn Every Time.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -844,6 +867,33 @@
   </footer>
 
   <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+
+  <script>
+    // Tally embed is a cross-origin iframe — we can't see keystrokes inside it,
+    // so "started" is approximated by the user focusing the embed (a real click/tab-in),
+    // and "submitted" comes from Tally's own postMessage event, which is authoritative.
+    var tallyIframe = document.querySelector('iframe[data-tally-src]');
+    var applyFormStarted = false;
+
+    window.addEventListener('blur', function() {
+      if (applyFormStarted || !tallyIframe) return;
+      if (document.activeElement === tallyIframe) {
+        applyFormStarted = true;
+        mixpanel.track('email_interest_form_started', {
+          form_variant: 'creator_signup_v1',
+          landing_source: window.originaliaLandingSource
+        });
+      }
+    });
+
+    window.addEventListener('message', function(event) {
+      if (!event.data || event.data.event !== 'Tally.FormSubmitted') return;
+      mixpanel.track('email_interest_form_submitted', {
+        form_variant: 'creator_signup_v1',
+        submission_type: 'waitlist_request'
+      });
+    });
+  </script>
 
   <script>
     // Use-type vertical ticker
