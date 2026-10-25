@@ -36,7 +36,7 @@
     window.originaliaLandingSource = originaliaLandingSource();
     mixpanel.track('site_landing', { landing_source: window.originaliaLandingSource });
   </script>
-  <title>Originalia — Exclusive Character Art, Cleared for Commercial Use</title>
+  <title>Originalia — The Home for Original Character IP</title>
   <meta name="description" content="Originalia is a curated library of original character IP. Every character is licensed for film, publishing, brand, game, or AI training use, and every artist is paid. Request a character or commission one." />
   <link rel="canonical" href="https://originalia.art/" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
@@ -44,15 +44,15 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Originalia" />
-  <meta property="og:title" content="Originalia — Exclusive Character Art, Cleared for Commercial Use" />
+  <meta property="og:title" content="Originalia — The Home for Original Character IP" />
   <meta property="og:description" content="A curated library of original character IP. Every use licensed, every artist paid." />
   <meta property="og:url" content="https://originalia.art/" />
   <meta property="og:image" content="https://originalia.art/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Originalia: Exclusive character art. Licensed and ready." />
+  <meta property="og:image:alt" content="Originalia: The home for original character IP." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Originalia — Exclusive Character Art, Cleared for Commercial Use" />
+  <meta name="twitter:title" content="Originalia — The Home for Original Character IP" />
   <meta name="twitter:description" content="A curated library of original character IP. Every use licensed, every artist paid." />
   <meta name="twitter:image" content="https://originalia.art/og-image.png" />
   <script type="application/ld+json">
@@ -77,7 +77,7 @@
         "@type": "WebPage",
         "@id": "https://originalia.art/#webpage",
         "url": "https://originalia.art/",
-        "name": "Originalia — Exclusive Character Art, Cleared for Commercial Use",
+        "name": "Originalia — The Home for Original Character IP",
         "description": "A curated library of original character IP for studios, publishers, brands, game developers, and AI companies. Every use is licensed and every artist is paid.",
         "isPartOf": { "@id": "https://originalia.art/#website" },
         "about": { "@id": "https://originalia.art/#organization" }
@@ -222,7 +222,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 64px;
-      align-items: end;
+      align-items: center;
       max-width: 960px;
     }
 
@@ -256,20 +256,57 @@
 
     .hero-cta:hover { background: var(--accent-dark); }
 
-    .hero-note {
-      font-size: 13px;
-      color: var(--ink);
-    }
 
     /* WHY QUESTION */
-    .why { border: none; min-width: 0; }
+    .why {
+      border: none;
+      min-width: 0;
+      background: var(--warm-white);
+      border-radius: 6px;
+      padding: 24px;
+      box-shadow: 0 0 0 1px rgba(107,173,212,0.25);
+    }
+
+    .why legend { float: left; width: 100%; padding: 0; margin-bottom: 18px; }
+    .why legend + * { clear: both; }
+
+    .why-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .pulse-dot {
+      position: relative;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-ring 1.8s ease-out infinite;
+    }
 
     .why-q {
-      font-size: 15px;
-      font-weight: 600;
+      display: block;
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
       color: var(--ink);
-      margin-bottom: 14px;
-      padding: 0;
     }
 
     .why-options {
@@ -283,38 +320,41 @@
       font-size: 14px;
       font-weight: 500;
       color: var(--ink);
-      background: var(--warm-white);
+      background: var(--cream);
       border: none;
       border-radius: 4px;
       padding: 11px 16px;
       cursor: pointer;
       box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
-      transition: box-shadow 0.15s, color 0.15s;
+      transition: box-shadow 0.15s, color 0.15s, background 0.15s;
     }
 
     .why-opt:hover { box-shadow: 0 0 0 1px var(--accent); color: var(--accent-dark); }
     .why-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .why-opt[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); color: var(--accent); }
+    .why-opt[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); color: var(--accent); background: var(--accent-light); }
 
-    .why-recap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 14px;
-      color: var(--ink-soft);
+    /* Draw the eye until the visitor answers, then go quiet. */
+    .why-hero, .frame[data-state="ask"] { animation: glow 2.8s ease-in-out infinite; }
+    body.answered .why-hero, body.answered .frame, body.answered .pulse-dot::after { animation: none; }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(107,173,212,0.25), 0 0 0 0 rgba(107,173,212,0); }
+      50%      { box-shadow: 0 0 0 1px rgba(107,173,212,0.75), 0 0 32px 2px rgba(107,173,212,0.28); }
     }
 
-    .why-recap strong { color: var(--ink); font-weight: 600; }
+    @keyframes pulse-ring {
+      0%   { transform: scale(1); opacity: 0.7; }
+      100% { transform: scale(3.2); opacity: 0; }
+    }
 
-    .why-change {
-      font-family: var(--sans);
-      font-size: 13px;
-      color: var(--accent);
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      text-decoration: underline;
+    @keyframes step-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .why-hero, .frame[data-state="ask"], .pulse-dot::after, .step { animation: none !important; }
+      html { scroll-behavior: auto; }
     }
 
     /* SECTION BASE */
@@ -431,59 +471,88 @@
     }
 
     .form-inner {
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
       padding: 80px 32px;
     }
 
-    .form-inner .section-label { color: var(--warm); }
-
-    .form-intro {
-      font-size: 17px;
-      color: var(--ink-soft);
-      margin-bottom: 40px;
-      line-height: 1.65;
-      margin-top: -24px;
+    .frame {
+      background: var(--warm-white);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
     }
 
-    form {
+    .frame .why { background: transparent; box-shadow: none; padding: 36px 32px; }
+    .frame .why-q { font-size: 28px; }
+    .frame .why-opt { background: var(--cream); }
+
+    .frame-head {
       display: flex;
-      flex-direction: column;
-      gap: 14px;
+      align-items: baseline;
+      gap: 10px;
+      padding: 16px 28px;
+      background: var(--accent);
+      color: #0D0F0E;
     }
 
-    label {
-      font-size: 13px;
+    .frame-head-label {
+      font-size: 12px;
       font-weight: 600;
-      color: var(--ink);
-      display: block;
-      margin-bottom: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.7;
     }
 
-    input, select, textarea {
+    .frame-head strong { font-family: var(--serif); font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
+
+    .frame-change {
+      margin-left: auto;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: #0D0F0E;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .progress { height: 3px; background: rgba(255,255,255,0.08); }
+    .progress-bar { height: 100%; width: 0; background: var(--accent-dark); transition: width 0.35s ease; }
+
+    #requestForm { padding: 40px 32px 32px; gap: 0; }
+
+    .step { animation: step-in 0.35s ease both; }
+
+    .step-q {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 22px;
+    }
+
+    .step input, .step textarea {
       width: 100%;
-      padding: 12px 16px;
+      padding: 16px 18px;
       border: none;
       border-radius: 4px;
-      font-size: 15px;
+      font-size: 18px;
       font-family: var(--sans);
-      background: var(--warm-white);
+      background: var(--cream);
       color: var(--ink);
       outline: none;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
       transition: box-shadow 0.15s;
     }
 
-    input:focus, select:focus, textarea:focus {
-      box-shadow: 0 0 0 2px var(--accent);
-    }
-
-    select option { background: var(--warm-white); }
-
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
+    .step input:focus, .step textarea:focus { box-shadow: 0 0 0 2px var(--accent); }
+    .step textarea { resize: vertical; min-height: 120px; }
 
     .form-row {
       display: grid;
@@ -491,42 +560,47 @@
       gap: 14px;
     }
 
-    .field-note {
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--ink-soft);
-      opacity: 0.6;
+    .step-error { min-height: 20px; margin-top: 10px; font-size: 14px; color: var(--warm); }
+
+    .step-nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 14px;
     }
 
-    .submit-btn {
+    .step-next {
       background: var(--accent);
       color: #0D0F0E;
       border: none;
-      padding: 16px;
+      padding: 14px 28px;
       border-radius: 4px;
       font-size: 16px;
       font-weight: 600;
       font-family: var(--sans);
       cursor: pointer;
       transition: background 0.15s;
-      margin-top: 6px;
     }
 
-    .submit-btn:hover { background: var(--accent-dark); }
+    .step-next:hover { background: var(--accent-dark); }
 
-    .form-fine {
-      font-size: 12px;
+    .step-back {
+      font-family: var(--sans);
+      font-size: 14px;
       color: var(--ink-soft);
-      opacity: 0.6;
-      text-align: center;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
     }
+
+    .step-hint { font-size: 12px; color: var(--ink-soft); opacity: 0.6; }
+    @media (hover: none) { .step-hint { display: none; } }
 
     .success-msg {
       display: none;
-      background: var(--warm-white);
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
-      border-radius: 4px;
-      padding: 48px;
+      padding: 56px 32px;
       text-align: center;
     }
 
@@ -562,6 +636,10 @@
       .form-row { grid-template-columns: 1fr; }
       .section { padding: 60px 24px; }
       .form-inner { padding: 60px 24px; }
+      .frame .why { padding: 28px 22px; }
+      .frame .why-q { font-size: 24px; }
+      .frame-head { padding: 14px 20px; }
+      #requestForm { padding: 32px 22px 24px; }
     }
   </style>
 </head>
@@ -578,23 +656,22 @@
   <!-- HERO -->
   <section class="hero">
     <span class="eyebrow">Now taking requests</span>
-    <h1>Exclusive character art.<br /><em>Licensed and ready.</em></h1>
+    <h1>The home for<br /><em>original character IP.</em></h1>
     <div class="hero-sub">
       <p>Originalia is a curated library of original character IP — every piece licensed, every artist paid. Tell us what you're looking for and we'll be in touch.</p>
       <div class="hero-actions">
-        <fieldset class="why" id="whyQuestion">
-          <legend class="why-q">What do you want character art for?</legend>
+        <fieldset class="why why-hero" data-why-group data-placement="hero">
+          <legend><span class="why-kicker"><span class="pulse-dot"></span>Get started</span><span class="why-q">What do you want character art for?</span></legend>
           <div class="why-options">
-            <button type="button" class="why-opt" data-value="tv-film">TV and Film</button>
-            <button type="button" class="why-opt" data-value="social">Social media</button>
-            <button type="button" class="why-opt" data-value="publishing">Book / Publishing</button>
-            <button type="button" class="why-opt" data-value="brand">Brand / Commercial</button>
-            <button type="button" class="why-opt" data-value="game">Gaming</button>
-            <button type="button" class="why-opt" data-value="ai-training">AI Training</button>
-            <button type="button" class="why-opt" data-value="other">Something else</button>
+            <button type="button" class="why-opt" data-value="tv-film" aria-pressed="false">TV and Film</button>
+            <button type="button" class="why-opt" data-value="social" aria-pressed="false">Social media</button>
+            <button type="button" class="why-opt" data-value="publishing" aria-pressed="false">Book / Publishing</button>
+            <button type="button" class="why-opt" data-value="brand" aria-pressed="false">Brand / Commercial</button>
+            <button type="button" class="why-opt" data-value="game" aria-pressed="false">Gaming</button>
+            <button type="button" class="why-opt" data-value="ai-training" aria-pressed="false">AI Training</button>
+            <button type="button" class="why-opt" data-value="other" aria-pressed="false">Something else</button>
           </div>
         </fieldset>
-        <p class="hero-note">One click. No commitment. We review every request personally.</p>
       </div>
     </div>
   </section>
@@ -658,63 +735,84 @@
   </div>
 
   <!-- REQUEST FORM -->
-  <div class="form-section" id="request" hidden>
+  <div class="form-section" id="request">
     <div class="form-inner">
-      <p class="section-label">Request a character</p>
-      <h2>Tell us what<br />you're looking for.</h2>
-      <p class="form-intro">We're matching buyers with artists now. Describe what you need and we'll follow up personally — no commitment required.</p>
+      <div class="frame" id="frame" data-state="ask">
+        <div id="frameAsk">
+          <fieldset class="why" data-why-group data-placement="frame">
+            <legend><span class="why-kicker"><span class="pulse-dot"></span>Get started</span><span class="why-q">What do you want character art for?</span></legend>
+            <div class="why-options">
+              <button type="button" class="why-opt" data-value="tv-film" aria-pressed="false">TV and Film</button>
+              <button type="button" class="why-opt" data-value="social" aria-pressed="false">Social media</button>
+              <button type="button" class="why-opt" data-value="publishing" aria-pressed="false">Book / Publishing</button>
+              <button type="button" class="why-opt" data-value="brand" aria-pressed="false">Brand / Commercial</button>
+              <button type="button" class="why-opt" data-value="game" aria-pressed="false">Gaming</button>
+              <button type="button" class="why-opt" data-value="ai-training" aria-pressed="false">AI Training</button>
+              <button type="button" class="why-opt" data-value="other" aria-pressed="false">Something else</button>
+            </div>
+          </fieldset>
+        </div>
 
-      <form id="requestForm">
-        <div class="form-row">
-          <div>
-            <label for="fname">First name</label>
-            <input type="text" id="fname" name="fname" placeholder="Alex" required />
+        <div id="frameForm" hidden>
+          <div class="frame-head">
+            <span class="frame-head-label">Character art for</span>
+            <strong id="whyLabel"></strong>
+            <button type="button" class="frame-change" id="whyChange">Change</button>
           </div>
-          <div>
-            <label for="lname">Last name</label>
-            <input type="text" id="lname" name="lname" placeholder="Rivera" required />
+          <div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+
+          <form id="requestForm" novalidate>
+            <div class="step" data-name="email">
+              <label class="step-q" for="email">Where should we reach you?</label>
+              <input type="email" id="email" name="email" placeholder="alex@studio.com" autocomplete="email" required />
+              <p class="step-error" role="alert"></p>
+            </div>
+
+            <div class="step" data-name="name" hidden>
+              <span class="step-q" id="nameQ">And your name?</span>
+              <div class="form-row">
+                <input type="text" id="fname" name="first_name" placeholder="First name" autocomplete="given-name" aria-labelledby="nameQ" required />
+                <input type="text" id="lname" name="last_name" placeholder="Last name" autocomplete="family-name" aria-labelledby="nameQ" />
+              </div>
+              <p class="step-error" role="alert"></p>
+            </div>
+
+            <div class="step" data-name="org" hidden>
+              <label class="step-q" for="org">What's the company or project?</label>
+              <input type="text" id="org" name="org" placeholder="Studio, brand, or project name" autocomplete="organization" />
+              <p class="step-error" role="alert"></p>
+            </div>
+
+            <div class="step" data-name="description" hidden>
+              <label class="step-q" for="description">What kind of character are you picturing?</label>
+              <textarea id="description" name="description" placeholder="Style, mood, genre, reference points. Leave blank if you're still exploring."></textarea>
+              <p class="step-error" role="alert"></p>
+            </div>
+
+            <div class="step" data-name="timeline" hidden>
+              <span class="step-q" id="timelineQ">When do you need it?</span>
+              <input type="hidden" id="timeline" name="timeline" />
+              <div class="why-options" role="group" aria-labelledby="timelineQ">
+                <button type="button" class="why-opt" data-time="asap" aria-pressed="false">As soon as possible</button>
+                <button type="button" class="why-opt" data-time="1-3mo" aria-pressed="false">1–3 months</button>
+                <button type="button" class="why-opt" data-time="3-6mo" aria-pressed="false">3–6 months</button>
+                <button type="button" class="why-opt" data-time="exploring" aria-pressed="false">Just exploring</button>
+              </div>
+              <p class="step-error" role="alert"></p>
+            </div>
+
+            <div class="step-nav">
+              <button type="button" class="step-back" id="stepBack" hidden>Back</button>
+              <button type="submit" class="step-next" id="stepNext">Continue →</button>
+              <span class="step-hint">or press Enter ↵</span>
+            </div>
+          </form>
+
+          <div class="success-msg" id="successMsg">
+            <h3>Request received.</h3>
+            <p>We'll review it and be in touch soon.<br /><br />In the meantime — originality is worth waiting for.</p>
           </div>
         </div>
-
-        <div>
-          <label for="email">Work email</label>
-          <input type="email" id="email" name="email" placeholder="alex@studio.com" required />
-        </div>
-
-        <div>
-          <label for="org">Company or project <span class="field-note">(optional)</span></label>
-          <input type="text" id="org" name="org" placeholder="Studio name, brand, or project" />
-        </div>
-
-        <input type="hidden" id="type" name="type" />
-        <div class="why-recap">
-          <span>Looking for art for: <strong id="whyLabel"></strong></span>
-          <button type="button" class="why-change" id="whyChange">Change</button>
-        </div>
-
-        <div>
-          <label for="description">What kind of character do you need? <span class="field-note">(optional)</span></label>
-          <textarea id="description" name="description" placeholder="Style, mood, genre, any reference points — the more detail, the better we can match you. Leave blank if you're still exploring."></textarea>
-        </div>
-
-        <div>
-          <label for="timeline">When do you need it? <span class="field-note">(optional)</span></label>
-          <select id="timeline" name="timeline">
-            <option value="" disabled selected>Select one</option>
-            <option value="asap">As soon as possible</option>
-            <option value="1-3mo">1–3 months</option>
-            <option value="3-6mo">3–6 months</option>
-            <option value="exploring">Just exploring for now</option>
-          </select>
-        </div>
-
-        <button type="submit" class="submit-btn">Send request →</button>
-        <p class="form-fine">We review every request personally.</p>
-      </form>
-
-      <div class="success-msg" id="successMsg">
-        <h3>Request received.</h3>
-        <p>We'll review it and be in touch soon.<br /><br />In the meantime — originality is worth waiting for.</p>
       </div>
     </div>
   </div>
@@ -725,50 +823,162 @@
   </footer>
 
   <script>
-    var requestForm = document.getElementById('requestForm');
-    var requestFormStarted = false;
+    (function () {
+      var SUPABASE_URL = 'https://jbnnsilzkwdgamfowlyr.supabase.co';
+      var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impibm5zaWx6a3dkZ2FtZm93bHlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NjczMzUsImV4cCI6MjEwODU0MzMzNX0.ZCyyTQcEVt1BBc0yvV3ihgB0swjuvhEdSfFscN7ODOE'; // anon key: public by design; the leads table is locked by RLS (see supabase/schema.sql)
+      var FORM_VARIANT = 'buyer_request_v2';
 
-    // Painted-door question: record the answer immediately, then reveal the form.
-    var whyOptions = Array.from(document.querySelectorAll('.why-opt'));
-    var whyType = document.getElementById('type');
-    whyOptions.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        whyOptions.forEach(function(b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-        whyType.value = btn.dataset.value;
-        document.getElementById('whyLabel').textContent = btn.textContent;
+      var leadId = (function () {
+        try { var saved = sessionStorage.getItem('originalia_lead_id'); if (saved) return saved; } catch (e) {}
+        var id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() :
+          'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16);
+          });
+        try { sessionStorage.setItem('originalia_lead_id', id); } catch (e) {}
+        return id;
+      })();
+
+      // Upserts one row per visitor via the save_lead() function; failures never block the UI.
+      function saveLead(data) {
+        if (!SUPABASE_KEY) return;
+        var headers = { 'Content-Type': 'application/json', apikey: SUPABASE_KEY };
+        if (SUPABASE_KEY.indexOf('eyJ') === 0) headers.Authorization = 'Bearer ' + SUPABASE_KEY;
+        data.landing_source = window.originaliaLandingSource;
+        fetch(SUPABASE_URL + '/rest/v1/rpc/save_lead', {
+          method: 'POST', headers: headers, keepalive: true,
+          body: JSON.stringify({ p_id: leadId, p_data: data })
+        }).catch(function () {});
+      }
+
+      var frame = document.getElementById('frame');
+      var frameAsk = document.getElementById('frameAsk');
+      var frameForm = document.getElementById('frameForm');
+      var form = document.getElementById('requestForm');
+      var steps = Array.from(form.querySelectorAll('.step'));
+      var progressBar = document.getElementById('progressBar');
+      var backBtn = document.getElementById('stepBack');
+      var nextBtn = document.getElementById('stepNext');
+      var useCaseChips = Array.from(document.querySelectorAll('.why-opt[data-value]'));
+      var timelineChips = Array.from(document.querySelectorAll('.why-opt[data-time]'));
+      var optionalSteps = { 2: true, 3: true, 4: true };
+      var useCase = '';
+      var step = 0;
+      var formStarted = false;
+
+      function stepHasValue(i) {
+        return Array.from(steps[i].querySelectorAll('input:not([type=hidden]), textarea'))
+          .some(function (el) { return el.value.trim(); });
+      }
+
+      function updateNext() {
+        if (step === steps.length - 1) nextBtn.textContent = 'Send request →';
+        else if (optionalSteps[step] && !stepHasValue(step)) nextBtn.textContent = 'Skip';
+        else nextBtn.textContent = 'Continue →';
+      }
+
+      function showStep(i, focus) {
+        step = i;
+        steps.forEach(function (el, idx) { el.hidden = idx !== i; });
+        progressBar.style.width = ((i + 1) / steps.length * 100) + '%';
+        backBtn.hidden = i === 0;
+        updateNext();
+        mixpanel.track('request_step_viewed', { step: i + 1, step_name: steps[i].dataset.name, use_case: useCase });
+        var field = steps[i].querySelector('input:not([type=hidden]), textarea');
+        if (focus && field) field.focus({ preventScroll: true });
+      }
+
+      function selectUseCase(chip, placement) {
+        var changed = !!useCase && useCase !== chip.dataset.value;
+        useCase = chip.dataset.value;
+        useCaseChips.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.value === useCase ? 'true' : 'false'); });
+        document.getElementById('whyLabel').textContent = chip.textContent;
+        document.body.classList.add('answered');
         mixpanel.track('use_case_selected', {
-          use_case: btn.dataset.value,
+          use_case: useCase, placement: placement, changed: changed,
           landing_source: window.originaliaLandingSource
         });
-        var section = document.getElementById('request');
-        section.hidden = false;
-        section.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-    document.getElementById('whyChange').addEventListener('click', function() {
-      document.getElementById('whyQuestion').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-    requestForm.addEventListener('focusin', function() {
-      if (requestFormStarted) return;
-      requestFormStarted = true;
-      mixpanel.track('email_interest_form_started', {
-        form_variant: 'buyer_request_v1',
-        landing_source: window.originaliaLandingSource
-      });
-    });
+        saveLead({ use_case: useCase });
+        frameAsk.hidden = true;
+        frameForm.hidden = false;
+        frame.dataset.state = 'form';
+        showStep(step, false);
+        if (placement === 'hero') frame.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
 
-    requestForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      mixpanel.track('email_interest_form_submitted', {
-        form_variant: 'buyer_request_v1',
-        submission_type: 'email_request',
-        use_case: whyType.value
+      useCaseChips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          selectUseCase(chip, chip.closest('[data-why-group]').dataset.placement);
+        });
       });
-      this.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-      // TODO: wire to Airtable, Notion, or backend
-    });
 
+      document.getElementById('whyChange').addEventListener('click', function () {
+        frameForm.hidden = true;
+        frameAsk.hidden = false;
+        frame.dataset.state = 'ask';
+      });
+
+      timelineChips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          document.getElementById('timeline').value = chip.dataset.time;
+          timelineChips.forEach(function (b) { b.setAttribute('aria-pressed', b === chip ? 'true' : 'false'); });
+        });
+      });
+
+      form.addEventListener('input', function () {
+        updateNext();
+        if (formStarted) return;
+        formStarted = true;
+        mixpanel.track('email_interest_form_started', { form_variant: FORM_VARIANT, landing_source: window.originaliaLandingSource });
+      });
+
+      // Cmd/Ctrl+Enter advances from the textarea (plain Enter stays a newline).
+      form.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && e.target.tagName === 'TEXTAREA') form.requestSubmit();
+      });
+
+      backBtn.addEventListener('click', function () { if (step > 0) showStep(step - 1, true); });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var current = steps[step];
+        var error = current.querySelector('.step-error');
+        error.textContent = '';
+
+        if (step === 0 && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.value.trim())) {
+          error.textContent = 'Please enter a valid email address.';
+          form.email.focus();
+          return;
+        }
+        if (step === 1 && !form.first_name.value.trim()) {
+          error.textContent = 'Please add your first name.';
+          form.first_name.focus();
+          return;
+        }
+
+        var data = { step_reached: step + 1 };
+        Array.from(current.querySelectorAll('[name]')).forEach(function (el) { data[el.name] = el.value.trim(); });
+        var last = step === steps.length - 1;
+        if (last) data.completed = true;
+        saveLead(data);
+        mixpanel.track('request_step_completed', {
+          step: step + 1, step_name: current.dataset.name, use_case: useCase,
+          skipped: !!optionalSteps[step] && !stepHasValue(step) && !(last && form.timeline.value)
+        });
+
+        if (!last) { showStep(step + 1, true); return; }
+
+        mixpanel.track('email_interest_form_submitted', {
+          form_variant: FORM_VARIANT, submission_type: 'email_request', use_case: useCase
+        });
+        progressBar.style.width = '100%';
+        form.hidden = true;
+        document.getElementById('successMsg').style.display = 'block';
+      });
+    })();
+
+    </script>
+
+  <script>
     // Who-it's-for ticker
     const whoRows = Array.from(document.querySelectorAll('.who-row'));
     let whoIndex = 0;
