@@ -552,6 +552,24 @@
     }
 
     .step input:focus, .step textarea:focus { box-shadow: 0 0 0 2px var(--accent); }
+
+    /* Browsers paint autofilled fields a light color; paint over it with the field's own background. */
+    .step input:-webkit-autofill,
+    .step input:-webkit-autofill:hover,
+    .step input:-webkit-autofill:focus,
+    .step input:-webkit-autofill:active {
+      -webkit-text-fill-color: var(--ink);
+      caret-color: var(--ink);
+      box-shadow: 0 0 0 1000px var(--cream) inset, 0 0 0 1px rgba(255,255,255,0.1);
+      transition: background-color 9999s ease-out 0s;
+    }
+    .step input:-webkit-autofill:focus {
+      box-shadow: 0 0 0 1000px var(--cream) inset, 0 0 0 2px var(--accent);
+    }
+    .step input:autofill {
+      background: var(--cream);
+      color: var(--ink);
+    }
     .step textarea { resize: vertical; min-height: 120px; }
 
     .form-row {
