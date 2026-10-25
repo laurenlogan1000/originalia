@@ -85,6 +85,71 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": "https://originalia.art/#faq",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why can't I search characters directly?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Originalia isn't an open catalog. We protect artists' work from scraping, so at this moment we don't allow search directly on the platform. Tell us what you're looking for and we'll match you with characters from the library."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does licensing work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every character is licensed under a documented agreement for how you'll use it: film and TV, publishing, brand and commercial, games, or AI training. You get your rights in writing from day one."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I own the character I license?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Licensing isn't selling. Artists keep ownership of the characters in the library, and you get documented rights for your agreed use."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are the characters really original?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Every character in the library is original IP created by a real artist and available only through Originalia. Not stock, not generated, not derivative."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I commission a character that isn't in the library?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Tell us what you need and we'll match you with the right artist and manage the licensing from day one."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I license characters for AI training?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, as an optional category. Artists opt in character by character, so AI training rights are only available where the artist has agreed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does it cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pricing depends on the character and how you'll use it. Artists set a minimum rate for each type of use, and we never license below it. Tell us what you're looking for and we'll follow up with specifics."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
@@ -463,6 +528,50 @@
       color: var(--accent);
       letter-spacing: 0.5px;
       white-space: nowrap;
+    }
+
+    /* FAQ */
+    .faq { display: grid; gap: 12px; }
+
+    .faq-item {
+      background: var(--warm-white);
+      border-radius: 4px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    .faq-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+    .faq-item summary::after {
+      content: '+';
+      flex-shrink: 0;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+
+    .faq-item p {
+      padding: 0 24px 22px;
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 680px;
     }
 
     /* FORM */
@@ -867,6 +976,42 @@
       </div>
     </div>
   </div>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <p class="section-label">FAQ</p>
+    <h2>Questions, answered.</h2>
+    <div class="faq">
+        <details class="faq-item">
+          <summary>Why can't I search characters directly?</summary>
+          <p>Originalia isn't an open catalog. We protect artists' work from scraping, so at this moment we don't allow search directly on the platform. Tell us what you're looking for and we'll match you with characters from the library.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How does licensing work?</summary>
+          <p>Every character is licensed under a documented agreement for how you'll use it: film and TV, publishing, brand and commercial, games, or AI training. You get your rights in writing from day one.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I own the character I license?</summary>
+          <p>No. Licensing isn't selling. Artists keep ownership of the characters in the library, and you get documented rights for your agreed use.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Are the characters really original?</summary>
+          <p>Yes. Every character in the library is original IP created by a real artist and available only through Originalia. Not stock, not generated, not derivative.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I commission a character that isn't in the library?</summary>
+          <p>Yes. Tell us what you need and we'll match you with the right artist and manage the licensing from day one.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I license characters for AI training?</summary>
+          <p>Yes, as an optional category. Artists opt in character by character, so AI training rights are only available where the artist has agreed.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How much does it cost?</summary>
+          <p>Pricing depends on the character and how you'll use it. Artists set a minimum rate for each type of use, and we never license below it. Tell us what you're looking for and we'll follow up with specifics.</p>
+        </details>
+    </div>
+  </section>
   </main>
 
   <footer>
@@ -900,6 +1045,12 @@
           body: JSON.stringify({ p_id: leadId, p_data: data })
         }).catch(function () {});
       }
+
+      Array.from(document.querySelectorAll('.faq-item')).forEach(function (item) {
+        item.addEventListener('toggle', function () {
+          if (item.open) mixpanel.track('faq_opened', { question: item.querySelector('summary').textContent });
+        });
+      });
 
       var frame = document.getElementById('frame');
       var frameAsk = document.getElementById('frameAsk');

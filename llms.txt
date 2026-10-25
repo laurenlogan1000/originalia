@@ -17,3 +17,4 @@ Originalia is early-stage. Buyers submit a request and the team follows up perso
 - AI training use is opt-in, per character. Artists who decline are not included.
 - Every license is reported to the artist: who licensed it, for what use, and what they paid.
 - Custom commissions: buyers can request a character built to their specs; Originalia matches them with an artist and manages licensing from the start.
+- The library is not publicly searchable: Originalia protects artists' work from scraping, so buyers tell Originalia what they need and are matched with characters personally.
