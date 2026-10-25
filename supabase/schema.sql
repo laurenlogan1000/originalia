@@ -1,5 +1,5 @@
 -- Originalia leads: painted-door answers + progressive request form.
--- Run once in Supabase Dashboard > SQL Editor.
+-- Run in Supabase Dashboard > SQL Editor. Safe to re-run (idempotent).
 --
 -- Security model: the site is static, so the anon key ships in the page. The table
 -- has RLS on and NO policies, so anon can't read, insert, update, or delete rows
@@ -23,6 +23,8 @@ create table if not exists public.leads (
   completed       boolean not null default false
 );
 
+alter table public.leads add column if not exists filters text[];
+
 alter table public.leads enable row level security;
 
 create or replace function public.save_lead(p_id uuid, p_data jsonb)
@@ -35,6 +37,9 @@ declare
   v_use_case text := nullif(p_data->>'use_case', '');
   v_timeline text := nullif(p_data->>'timeline', '');
   v_email    text := nullif(left(p_data->>'email', 254), '');
+  v_filters  text[] := case when jsonb_typeof(p_data->'filters') = 'array'
+    then array(select left(x, 50) from jsonb_array_elements_text(p_data->'filters') x limit 20)
+    else null end;
 begin
   if p_id is null then
     raise exception 'id required';
@@ -52,7 +57,7 @@ begin
   end if;
 
   insert into public.leads as l
-    (id, use_case, email, first_name, last_name, org, description, timeline,
+    (id, use_case, email, first_name, last_name, org, description, timeline, filters,
      landing_source, step_reached, completed)
   values (
     p_id,
@@ -63,6 +68,7 @@ begin
     nullif(left(p_data->>'org', 200), ''),
     nullif(left(p_data->>'description', 4000), ''),
     v_timeline,
+    nullif(v_filters, '{}'),
     nullif(left(p_data->>'landing_source', 100), ''),
     coalesce((p_data->>'step_reached')::int, 0),
     coalesce((p_data->>'completed')::boolean, false)
@@ -76,6 +82,7 @@ begin
     org            = coalesce(excluded.org, l.org),
     description    = coalesce(excluded.description, l.description),
     timeline       = coalesce(excluded.timeline, l.timeline),
+    filters        = coalesce(excluded.filters, l.filters),
     landing_source = coalesce(l.landing_source, excluded.landing_source),
     step_reached   = greatest(l.step_reached, excluded.step_reached),
     completed      = l.completed or excluded.completed;

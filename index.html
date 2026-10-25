@@ -36,24 +36,24 @@
     window.originaliaLandingSource = originaliaLandingSource();
     mixpanel.track('site_landing', { landing_source: window.originaliaLandingSource });
   </script>
-  <title>Originalia — The Home for Original Character IP</title>
-  <meta name="description" content="Originalia is a curated library of original character IP. Every character is licensed for film, publishing, brand, game, or AI training use, and every artist is paid. Request a character or commission one." />
+  <title>Originalia — Exclusive Character Art, Cleared for Commercial Use</title>
+  <meta name="description" content="Originalia is a curated library of original character IP. Every character is licensed and ready to use in film, publishing, brand, games, or AI training. Request a character or commission one." />
   <link rel="canonical" href="https://originalia.art/" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
   <meta name="theme-color" content="#0D0F0E" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Originalia" />
-  <meta property="og:title" content="Originalia — The Home for Original Character IP" />
-  <meta property="og:description" content="A curated library of original character IP. Every use licensed, every artist paid." />
+  <meta property="og:title" content="Originalia — Exclusive Character Art, Cleared for Commercial Use" />
+  <meta property="og:description" content="A curated library of original character IP. Every piece licensed and ready to use." />
   <meta property="og:url" content="https://originalia.art/" />
   <meta property="og:image" content="https://originalia.art/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Originalia: The home for original character IP." />
+  <meta property="og:image:alt" content="Originalia: Exclusive character art. Licensed and ready." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Originalia — The Home for Original Character IP" />
-  <meta name="twitter:description" content="A curated library of original character IP. Every use licensed, every artist paid." />
+  <meta name="twitter:title" content="Originalia — Exclusive Character Art, Cleared for Commercial Use" />
+  <meta name="twitter:description" content="A curated library of original character IP. Every piece licensed and ready to use." />
   <meta name="twitter:image" content="https://originalia.art/og-image.png" />
   <script type="application/ld+json">
   {
@@ -77,8 +77,8 @@
         "@type": "WebPage",
         "@id": "https://originalia.art/#webpage",
         "url": "https://originalia.art/",
-        "name": "Originalia — The Home for Original Character IP",
-        "description": "A curated library of original character IP for studios, publishers, brands, game developers, and AI companies. Every use is licensed and every artist is paid.",
+        "name": "Originalia — Exclusive Character Art, Cleared for Commercial Use",
+        "description": "A curated library of original character IP for studios, publishers, brands, game developers, and AI companies. Every piece is licensed and ready to use.",
         "isPartOf": { "@id": "https://originalia.art/#website" },
         "about": { "@id": "https://originalia.art/#organization" }
       }
@@ -560,6 +560,18 @@
       gap: 14px;
     }
 
+    .filter-group { margin-bottom: 18px; }
+    .filter-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .step textarea { font-size: 16px; }
+
     .step-error { min-height: 20px; margin-top: 10px; font-size: 14px; color: var(--warm); }
 
     .step-nav {
@@ -656,9 +668,9 @@
   <!-- HERO -->
   <section class="hero">
     <span class="eyebrow">Now taking requests</span>
-    <h1>The home for<br /><em>original character IP.</em></h1>
+    <h1>Exclusive character art.<br /><em>Licensed and ready.</em></h1>
     <div class="hero-sub">
-      <p>Originalia is a curated library of original character IP — every piece licensed, every artist paid. Tell us what you're looking for and we'll be in touch.</p>
+      <p>Originalia is the home for original character IP — every piece licensed and ready to use. Tell us what you're looking for and we'll be in touch.</p>
       <div class="hero-actions">
         <fieldset class="why why-hero" data-why-group data-placement="hero">
           <legend><span class="why-kicker"><span class="pulse-dot"></span>Get started</span><span class="why-q">What do you want character art for?</span></legend>
@@ -689,7 +701,7 @@
       <div class="prop">
         <div class="prop-marker">◆</div>
         <h3>Every use is licensed</h3>
-        <p>Clear licensing agreements for every transaction. Film, publishing, brand, or AI training — you get documented rights, not a download and a prayer.</p>
+        <p>Clear licensing agreements for every transaction. Film, publishing, brand, or AI training — you get documented rights, in writing, from day one.</p>
       </div>
       <div class="prop">
         <div class="prop-marker">◆</div>
@@ -762,34 +774,34 @@
           <div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
 
           <form id="requestForm" novalidate>
-            <div class="step" data-name="email">
-              <label class="step-q" for="email">Where should we reach you?</label>
-              <input type="email" id="email" name="email" placeholder="alex@studio.com" autocomplete="email" required />
-              <p class="step-error" role="alert"></p>
-            </div>
-
-            <div class="step" data-name="name" hidden>
-              <span class="step-q" id="nameQ">And your name?</span>
-              <div class="form-row">
-                <input type="text" id="fname" name="first_name" placeholder="First name" autocomplete="given-name" aria-labelledby="nameQ" required />
-                <input type="text" id="lname" name="last_name" placeholder="Last name" autocomplete="family-name" aria-labelledby="nameQ" />
+            <div class="step" data-name="description" data-optional>
+              <span class="step-q" id="filterQ">What kind of character are you looking for?</span>
+              <div class="filter-group" role="group" aria-label="Type">
+                <span class="filter-label">Type</span>
+                <div class="why-options">
+                  <button type="button" class="why-opt" data-filter="human" aria-pressed="false">Human</button>
+                  <button type="button" class="why-opt" data-filter="animal" aria-pressed="false">Animal</button>
+                  <button type="button" class="why-opt" data-filter="creature" aria-pressed="false">Creature / Monster</button>
+                  <button type="button" class="why-opt" data-filter="robot" aria-pressed="false">Robot / Sci-fi</button>
+                  <button type="button" class="why-opt" data-filter="mascot" aria-pressed="false">Mascot</button>
+                </div>
               </div>
+              <div class="filter-group" role="group" aria-label="Style">
+                <span class="filter-label">Style</span>
+                <div class="why-options">
+                  <button type="button" class="why-opt" data-filter="cute" aria-pressed="false">Cute & friendly</button>
+                  <button type="button" class="why-opt" data-filter="realistic" aria-pressed="false">Realistic</button>
+                  <button type="button" class="why-opt" data-filter="painterly" aria-pressed="false">Painterly</button>
+                  <button type="button" class="why-opt" data-filter="anime" aria-pressed="false">Anime / Manga</button>
+                  <button type="button" class="why-opt" data-filter="retro" aria-pressed="false">Retro / Vintage</button>
+                  <button type="button" class="why-opt" data-filter="dark" aria-pressed="false">Dark & edgy</button>
+                </div>
+              </div>
+              <textarea id="description" name="description" aria-label="Anything else?" placeholder="Anything else? Describe the character, or skip."></textarea>
               <p class="step-error" role="alert"></p>
             </div>
 
-            <div class="step" data-name="org" hidden>
-              <label class="step-q" for="org">What's the company or project?</label>
-              <input type="text" id="org" name="org" placeholder="Studio, brand, or project name" autocomplete="organization" />
-              <p class="step-error" role="alert"></p>
-            </div>
-
-            <div class="step" data-name="description" hidden>
-              <label class="step-q" for="description">What kind of character are you picturing?</label>
-              <textarea id="description" name="description" placeholder="Style, mood, genre, reference points. Leave blank if you're still exploring."></textarea>
-              <p class="step-error" role="alert"></p>
-            </div>
-
-            <div class="step" data-name="timeline" hidden>
+            <div class="step" data-name="timeline" data-optional hidden>
               <span class="step-q" id="timelineQ">When do you need it?</span>
               <input type="hidden" id="timeline" name="timeline" />
               <div class="why-options" role="group" aria-labelledby="timelineQ">
@@ -798,6 +810,27 @@
                 <button type="button" class="why-opt" data-time="3-6mo" aria-pressed="false">3–6 months</button>
                 <button type="button" class="why-opt" data-time="exploring" aria-pressed="false">Just exploring</button>
               </div>
+              <p class="step-error" role="alert"></p>
+            </div>
+
+            <div class="step" data-name="name" data-optional hidden>
+              <span class="step-q" id="nameQ">What's your name?</span>
+              <div class="form-row">
+                <input type="text" id="fname" name="first_name" placeholder="First name" autocomplete="given-name" aria-labelledby="nameQ" />
+                <input type="text" id="lname" name="last_name" placeholder="Last name" autocomplete="family-name" aria-labelledby="nameQ" />
+              </div>
+              <p class="step-error" role="alert"></p>
+            </div>
+
+            <div class="step" data-name="org" data-optional hidden>
+              <label class="step-q" for="org">What's the company or project?</label>
+              <input type="text" id="org" name="org" placeholder="Studio, brand, or project name" autocomplete="organization" />
+              <p class="step-error" role="alert"></p>
+            </div>
+
+            <div class="step" data-name="email" hidden>
+              <label class="step-q" for="email">Where should we send what we find?</label>
+              <input type="email" id="email" name="email" placeholder="alex@studio.com" autocomplete="email" required />
               <p class="step-error" role="alert"></p>
             </div>
 
@@ -860,19 +893,20 @@
       var nextBtn = document.getElementById('stepNext');
       var useCaseChips = Array.from(document.querySelectorAll('.why-opt[data-value]'));
       var timelineChips = Array.from(document.querySelectorAll('.why-opt[data-time]'));
-      var optionalSteps = { 2: true, 3: true, 4: true };
       var useCase = '';
       var step = 0;
       var formStarted = false;
 
+      function isOptional(i) { return steps[i].hasAttribute('data-optional'); }
+
       function stepHasValue(i) {
-        return Array.from(steps[i].querySelectorAll('input:not([type=hidden]), textarea'))
-          .some(function (el) { return el.value.trim(); });
+        return Array.from(steps[i].querySelectorAll('input, textarea')).some(function (el) { return el.value.trim(); }) ||
+          !!steps[i].querySelector('.why-opt[aria-pressed="true"]');
       }
 
       function updateNext() {
         if (step === steps.length - 1) nextBtn.textContent = 'Send request →';
-        else if (optionalSteps[step] && !stepHasValue(step)) nextBtn.textContent = 'Skip';
+        else if (isOptional(step) && !stepHasValue(step)) nextBtn.textContent = 'Skip';
         else nextBtn.textContent = 'Continue →';
       }
 
@@ -921,6 +955,15 @@
         chip.addEventListener('click', function () {
           document.getElementById('timeline').value = chip.dataset.time;
           timelineChips.forEach(function (b) { b.setAttribute('aria-pressed', b === chip ? 'true' : 'false'); });
+          updateNext();
+        });
+      });
+
+      // Filter chips toggle on and off, like search facets.
+      Array.from(document.querySelectorAll('.why-opt[data-filter]')).forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+          updateNext();
         });
       });
 
@@ -944,25 +987,25 @@
         var error = current.querySelector('.step-error');
         error.textContent = '';
 
-        if (step === 0 && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.value.trim())) {
+        if (current.dataset.name === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.value.trim())) {
           error.textContent = 'Please enter a valid email address.';
           form.email.focus();
-          return;
-        }
-        if (step === 1 && !form.first_name.value.trim()) {
-          error.textContent = 'Please add your first name.';
-          form.first_name.focus();
           return;
         }
 
         var data = { step_reached: step + 1 };
         Array.from(current.querySelectorAll('[name]')).forEach(function (el) { data[el.name] = el.value.trim(); });
+        if (current.dataset.name === 'description') {
+          var picked = Array.from(current.querySelectorAll('.why-opt[data-filter][aria-pressed="true"]'))
+            .map(function (el) { return el.dataset.filter; });
+          if (picked.length) data.filters = picked;
+        }
         var last = step === steps.length - 1;
         if (last) data.completed = true;
         saveLead(data);
         mixpanel.track('request_step_completed', {
           step: step + 1, step_name: current.dataset.name, use_case: useCase,
-          skipped: !!optionalSteps[step] && !stepHasValue(step) && !(last && form.timeline.value)
+          skipped: isOptional(step) && !stepHasValue(step), filters: data.filters ? data.filters.join(',') : ''
         });
 
         if (!last) { showStep(step + 1, true); return; }
