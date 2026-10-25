@@ -797,7 +797,7 @@
     <span class="eyebrow">Now taking requests</span>
     <h1>Exclusive character art.<br /><em>Licensed and ready.</em></h1>
     <div class="hero-sub">
-      <p>Originalia is the home for original character IP — every piece licensed and ready to use. Tell us what you're looking for and we'll be in touch.</p>
+      <p>Originalia is the home for original character IP. Every character is made from scratch by our curated artist community, licensed and ready to use.</p>
       <div class="hero-actions">
         <fieldset class="why why-hero" data-why-group data-placement="hero">
           <legend><span class="why-kicker"><span class="pulse-dot"></span>Get started</span><span class="why-q">What do you want character art for?</span></legend>
@@ -1124,6 +1124,7 @@
         chip.addEventListener('click', function () {
           document.getElementById('timeline').value = chip.dataset.time;
           timelineChips.forEach(function (b) { b.setAttribute('aria-pressed', b === chip ? 'true' : 'false'); });
+          markFormStarted();
           updateNext();
         });
       });
@@ -1132,15 +1133,21 @@
       Array.from(document.querySelectorAll('.why-opt[data-filter]')).forEach(function (chip) {
         chip.addEventListener('click', function () {
           chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+          markFormStarted();
           updateNext();
         });
       });
 
-      form.addEventListener('input', function () {
-        updateNext();
+      // "Started" = first real interaction with the form (typing, tapping a chip, or continuing/skipping).
+      function markFormStarted() {
         if (formStarted) return;
         formStarted = true;
-        mixpanel.track('email_interest_form_started', { form_variant: FORM_VARIANT, landing_source: window.originaliaLandingSource });
+        mixpanel.track('email_interest_form_started', { form_variant: FORM_VARIANT, use_case: useCase, landing_source: window.originaliaLandingSource });
+      }
+
+      form.addEventListener('input', function () {
+        updateNext();
+        markFormStarted();
       });
 
       // Cmd/Ctrl+Enter advances from the textarea (plain Enter stays a newline).
@@ -1152,6 +1159,7 @@
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        markFormStarted();
         var current = steps[step];
         var error = current.querySelector('.step-error');
         error.textContent = '';
