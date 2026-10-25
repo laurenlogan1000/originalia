@@ -1,0 +1,19 @@
+# Originalia
+
+> Originalia is a curated library of original character IP. Every character is created by a real artist, licensed under a documented agreement, and the artist is paid royalties on every use. Buyers (studios, publishers, brands, game developers, AI companies) license characters or commission new ones; artists license their original characters and keep ownership.
+
+Originalia is early-stage. Buyers submit a request and the team follows up personally. Artists apply for a founding cohort.
+
+## Pages
+
+- [For buyers: license or commission original characters](https://originalia.art/): what Originalia offers, who it serves (animation and streaming studios, publishers and independent authors, brands and agencies, game studios, AI content platforms), and the request form.
+- [For artists: license your characters, earn royalties](https://originalia.art/artists/): how artist licensing works, what artists earn, how their IP is protected, what Originalia is looking for, and the founding-artist application.
+
+## Key facts
+
+- Licensing, not selling: artists retain ownership of their IP. Buyers receive use rights only.
+- Artists set a minimum rate per use type (film and streaming, publishing, brand and commercial). Originalia negotiates with buyers and never licenses below that floor. Artists approve every deal before it is issued.
+- Exclusive characters are prioritized: original, unpublished work not listed elsewhere.
+- AI training use is opt-in, per character. Artists who decline are not included.
+- Every license is reported to the artist: who licensed it, for what use, and what they paid.
+- Custom commissions: buyers can request a character built to their specs; Originalia matches them with an artist and manages licensing from the start.
