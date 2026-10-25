@@ -261,6 +261,62 @@
       color: var(--ink);
     }
 
+    /* WHY QUESTION */
+    .why { border: none; min-width: 0; }
+
+    .why-q {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 14px;
+      padding: 0;
+    }
+
+    .why-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .why-opt {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--warm-white);
+      border: none;
+      border-radius: 4px;
+      padding: 11px 16px;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
+      transition: box-shadow 0.15s, color 0.15s;
+    }
+
+    .why-opt:hover { box-shadow: 0 0 0 1px var(--accent); color: var(--accent-dark); }
+    .why-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .why-opt[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); color: var(--accent); }
+
+    .why-recap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--ink-soft);
+    }
+
+    .why-recap strong { color: var(--ink); font-weight: 600; }
+
+    .why-change {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--accent);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
     /* SECTION BASE */
     .section {
       max-width: 900px;
@@ -526,8 +582,18 @@
     <div class="hero-sub">
       <p>Originalia is a curated library of original character IP — every piece licensed, every artist paid. Tell us what you're looking for and we'll be in touch.</p>
       <div class="hero-actions">
-        <a href="#request" class="hero-cta">Request a character →</a>
-        <p class="hero-note">No commitment. We review every request personally.</p>
+        <fieldset class="why" id="whyQuestion">
+          <legend class="why-q">What do you want character art for?</legend>
+          <div class="why-options">
+            <button type="button" class="why-opt" data-value="video">Video content</button>
+            <button type="button" class="why-opt" data-value="publishing">Book / Publishing</button>
+            <button type="button" class="why-opt" data-value="brand">Brand / Commercial</button>
+            <button type="button" class="why-opt" data-value="game">Game / Interactive</button>
+            <button type="button" class="why-opt" data-value="ai-training">AI Training</button>
+            <button type="button" class="why-opt" data-value="other">Something else</button>
+          </div>
+        </fieldset>
+        <p class="hero-note">One click. No commitment. We review every request personally.</p>
       </div>
     </div>
   </section>
@@ -591,7 +657,7 @@
   </div>
 
   <!-- REQUEST FORM -->
-  <div class="form-section" id="request">
+  <div class="form-section" id="request" hidden>
     <div class="form-inner">
       <p class="section-label">Request a character</p>
       <h2>Tell us what<br />you're looking for.</h2>
@@ -619,17 +685,10 @@
           <input type="text" id="org" name="org" placeholder="Studio name, brand, or project" />
         </div>
 
-        <div>
-          <label for="type">What's this for?</label>
-          <select id="type" name="type" required>
-            <option value="" disabled selected>Select one</option>
-            <option value="film-series">Film / Series</option>
-            <option value="publishing">Book / Publishing</option>
-            <option value="brand">Brand / Commercial</option>
-            <option value="game">Game / Interactive</option>
-            <option value="ai-training">AI Training</option>
-            <option value="other">Other / Not sure yet</option>
-          </select>
+        <input type="hidden" id="type" name="type" />
+        <div class="why-recap">
+          <span>Looking for art for: <strong id="whyLabel"></strong></span>
+          <button type="button" class="why-change" id="whyChange">Change</button>
         </div>
 
         <div>
@@ -667,6 +726,27 @@
   <script>
     var requestForm = document.getElementById('requestForm');
     var requestFormStarted = false;
+
+    // Painted-door question: record the answer immediately, then reveal the form.
+    var whyOptions = Array.from(document.querySelectorAll('.why-opt'));
+    var whyType = document.getElementById('type');
+    whyOptions.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        whyOptions.forEach(function(b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+        whyType.value = btn.dataset.value;
+        document.getElementById('whyLabel').textContent = btn.textContent;
+        mixpanel.track('use_case_selected', {
+          use_case: btn.dataset.value,
+          landing_source: window.originaliaLandingSource
+        });
+        var section = document.getElementById('request');
+        section.hidden = false;
+        section.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    document.getElementById('whyChange').addEventListener('click', function() {
+      document.getElementById('whyQuestion').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
     requestForm.addEventListener('focusin', function() {
       if (requestFormStarted) return;
       requestFormStarted = true;
@@ -680,7 +760,8 @@
       e.preventDefault();
       mixpanel.track('email_interest_form_submitted', {
         form_variant: 'buyer_request_v1',
-        submission_type: 'email_request'
+        submission_type: 'email_request',
+        use_case: whyType.value
       });
       this.style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
