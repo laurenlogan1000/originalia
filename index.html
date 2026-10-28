@@ -18,7 +18,8 @@
 
     mixpanel.init('742992ac6269996f0be103675c8387c9', { batch_requests: false });
 
-    function originaliaLandingSource() {
+    // Raw source for this page view: utm_source > gclid > referrer. Own-domain referrers are 'internal'.
+    function originaliaRawSource() {
       var params = new URLSearchParams(window.location.search);
       if (params.get('utm_source')) return params.get('utm_source');
       if (params.get('gclid')) return 'paid_search';
@@ -26,6 +27,7 @@
       if (!ref) return 'direct';
       var host = '';
       try { host = new URL(ref).hostname.replace('www.', ''); } catch (e) { return 'referral'; }
+      if (host === window.location.hostname.replace('www.', '')) return 'internal';
       var searchEngines = ['google.', 'bing.', 'duckduckgo.', 'yahoo.', 'baidu.'];
       for (var i = 0; i < searchEngines.length; i++) {
         if (host.indexOf(searchEngines[i]) !== -1) return 'organic';
@@ -33,8 +35,57 @@
       return 'referral';
     }
 
-    window.originaliaLandingSource = originaliaLandingSource();
-    mixpanel.track('site_landing', { landing_source: window.originaliaLandingSource });
+    // First touch is stored once; internal page-to-page navigation inherits it instead of counting as a referral.
+    var originaliaFirstTouch = null;
+    try { originaliaFirstTouch = localStorage.getItem('originalia_first_touch'); } catch (e) {}
+    var originaliaRaw = originaliaRawSource();
+    if (!originaliaFirstTouch && originaliaRaw !== 'internal') {
+      originaliaFirstTouch = originaliaRaw;
+      try { localStorage.setItem('originalia_first_touch', originaliaFirstTouch); } catch (e) {}
+    }
+
+    window.originaliaLandingSource = originaliaRaw === 'internal' ? (originaliaFirstTouch || 'internal') : originaliaRaw;
+    window.originaliaFirstTouch = originaliaFirstTouch || window.originaliaLandingSource;
+    mixpanel.register({ site: 'buyers' });
+    // When the visit came from our other page, record which site it came from (the origin stays in first_touch_source).
+    var originaliaReferrerSite = null;
+    if (originaliaRaw === 'internal') {
+      try { originaliaReferrerSite = new URL(document.referrer).pathname.indexOf('/artists') === 0 ? 'artists' : 'buyers'; } catch (e) {}
+    }
+    mixpanel.register({ referrer_site: originaliaReferrerSite });
+    mixpanel.track('site_landing', { landing_source: window.originaliaLandingSource, first_touch_source: window.originaliaFirstTouch, referrer_site: originaliaReferrerSite });
+
+    // Scroll depth: 25/50/75/100, each fired once per page view.
+    (function () {
+      var fired = {}, ticking = false;
+      function check() {
+        ticking = false;
+        var doc = document.documentElement;
+        var pct = (window.scrollY + window.innerHeight) / Math.max(doc.scrollHeight, 1) * 100;
+        [25, 50, 75, 100].forEach(function (t) {
+          if (pct >= t - 1 && !fired[t]) {
+            fired[t] = true;
+            mixpanel.track('scroll_depth', { depth: t, landing_source: window.originaliaLandingSource });
+          }
+        });
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(check); }
+      }, { passive: true });
+    })();
+
+    // Engaged time: fires once after 10 seconds with the tab visible.
+    (function () {
+      var seconds = 0;
+      var timer = setInterval(function () {
+        if (document.visibilityState !== 'visible') return;
+        seconds += 1;
+        if (seconds >= 10) {
+          clearInterval(timer);
+          mixpanel.track('engaged_10s', { landing_source: window.originaliaLandingSource });
+        }
+      }, 1000);
+    })();
   </script>
   <title>Originalia — Exclusive Character Art, Cleared for Commercial Use</title>
   <meta name="description" content="Originalia is a curated library of original character IP. Every character is licensed and ready to use in film, publishing, brand, games, or AI training. Request a character or commission one." />
@@ -1139,15 +1190,18 @@
       });
 
       // "Started" = first real interaction with the form (typing, tapping a chip, or continuing/skipping).
-      function markFormStarted() {
+      function markFormStarted(firstField) {
         if (formStarted) return;
         formStarted = true;
-        mixpanel.track('email_interest_form_started', { form_variant: FORM_VARIANT, use_case: useCase, landing_source: window.originaliaLandingSource });
+        mixpanel.track('email_interest_form_started', {
+          form_variant: FORM_VARIANT, use_case: useCase, landing_source: window.originaliaLandingSource,
+          first_field: firstField || steps[step].dataset.name
+        });
       }
 
-      form.addEventListener('input', function () {
+      form.addEventListener('input', function (e) {
         updateNext();
-        markFormStarted();
+        markFormStarted(e.target.name || e.target.id);
       });
 
       // Cmd/Ctrl+Enter advances from the textarea (plain Enter stays a newline).
